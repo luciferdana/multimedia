@@ -13,7 +13,9 @@ Repository ini berisi implementasi dan analisis multimedia mencakup audio, gamba
 ```
 Sistem Teknologi Multimedia/
 ├── ho_audio/                           # Audio Processing & Analysis
-│   └── 122140012_AudioExercise.ipynb  # Notebook audio processing lengkap
+│   ├── 122140012.ipynb                 # Notebook Audio
+│   ├── 122140012.pdf                   # PDF Hasil notebook
+
 ├── env_setup/                          # Environment Setup & Testing
 │   ├── requirements.txt                # Dependencies list
 │   ├── test_audio_simple.py           # Audio testing script
@@ -55,7 +57,7 @@ Sistem Teknologi Multimedia/
 **Deskripsi:** Implementasi lengkap audio processing dan analysis
 
 **Konten:**
-- `122140012_AudioExercise.ipynb` - Notebook utama untuk audio processing
+- `122140012.ipynb` - Notebook utama untuk audio processing
 
 **Data Input:**
 - `Audio1.wav` - Multi-level voice recording (berbisik hingga berteriak)
@@ -91,7 +93,7 @@ Sistem Teknologi Multimedia/
 **Cara menjalankan:**
 ```bash
 cd ho_audio
-jupyter notebook 122140012_AudioExercise.ipynb
+jupyter notebook 122140012.ipynb
 ```
 
 ---
@@ -272,7 +274,7 @@ data/
 ```bash
 # Jalankan notebook audio processing
 cd ho_audio
-jupyter notebook 122140012_AudioExercise.ipynb
+jupyter notebook 122140012.ipynb
 
 # Follow workflow secara sequential:
 # Soal 1: Multi-level analysis → metadata, waveform, spectrogram, resampling
