@@ -13,9 +13,7 @@ Repository ini berisi implementasi dan analisis multimedia mencakup audio, gamba
 ```
 Sistem Teknologi Multimedia/
 ├── ho_audio/                           # Audio Processing & Analysis
-│   ├── 122140012.ipynb                 # Notebook Audio
-│   ├── 122140012.pdf                   # PDF Hasil notebook
-
+│   └── 122140012_AudioExercise.ipynb  # Notebook audio processing lengkap
 ├── env_setup/                          # Environment Setup & Testing
 │   ├── requirements.txt                # Dependencies list
 │   ├── test_audio_simple.py           # Audio testing script
@@ -30,6 +28,22 @@ Sistem Teknologi Multimedia/
 ├── Worksheet_2/                        # Multimedia Analysis Worksheet
 │   ├── 122140012_Worksheet2.ipynb     # Worksheet notebook
 │   └── 122140012_Worksheet2.pdf       # PDF export hasil analisis
+├── worksheet_4/                        # Image Processing Worksheet
+│   ├── 122140012_worksheet4.ipynb     # Notebook image processing
+│   ├── 122140012_worksheet4.pdf       # PDF export hasil
+│   ├── assets_ws4/                    # Input images
+│   │   ├── image1.jpg                 # Selfie untuk cropping & filter
+│   │   ├── image2.jpg                 # Objek dengan tekstur
+│   │   └── image3.jpg                 # Objek datar untuk perspektif
+│   └── results_ws4/                   # Output hasil pemrosesan
+│       ├── face_crop_920x920.png
+│       ├── bg_crop_920x920.png
+│       ├── soal1_comparison.png
+│       ├── soal2_rgb_modified.png
+│       ├── soal2_histogram_comparison.png
+│       ├── soal3_edge_filter_comparison.png
+│       ├── soal4_face_filter_comparison.png
+│       └── soal5_perspective_correction.png
 ├── data/                               # Dataset & Audio Files
 │   ├── audio.wav                      # Audio untuk worksheet
 │   ├── Audio1.wav                     # Multi-level voice recording
@@ -57,7 +71,7 @@ Sistem Teknologi Multimedia/
 **Deskripsi:** Implementasi lengkap audio processing dan analysis
 
 **Konten:**
-- `122140012.ipynb` - Notebook utama untuk audio processing
+- `122140012_AudioExercise.ipynb` - Notebook utama untuk audio processing
 
 **Data Input:**
 - `Audio1.wav` - Multi-level voice recording (berbisik hingga berteriak)
@@ -93,7 +107,7 @@ Sistem Teknologi Multimedia/
 **Cara menjalankan:**
 ```bash
 cd ho_audio
-jupyter notebook 122140012.ipynb
+jupyter notebook 122140012_AudioExercise.ipynb
 ```
 
 ---
@@ -193,6 +207,106 @@ jupyter notebook 122140012_Worksheet2.ipynb
 
 ---
 
+## worksheet_4/
+
+**Deskripsi:** Worksheet analisis dan manipulasi citra digital komprehensif
+
+**Konten:**
+- `122140012_worksheet4.ipynb` - Notebook image processing lengkap
+- `122140012_worksheet4.pdf` - Export PDF hasil analisis
+- `assets_ws4/` - Folder input gambar asli
+- `results_ws4/` - Folder output hasil pemrosesan
+
+**Data Input yang Digunakan:**
+- `image1.jpg` - Selfie untuk cropping, color manipulation, dan face filter
+- `image2.jpg` - Objek dengan background tekstur untuk edge detection
+- `image3.jpg` - Objek datar (papan peringatan) untuk koreksi perspektif
+
+**Soal 1 - Cropping dan Konversi Warna:**
+- Cropping manual area wajah (kotak persegi) dan background (persegi panjang)
+- Resize hasil crop menjadi 920x920 piksel
+- Konversi ke ruang warna Grayscale dan HSV
+- Anotasi teks nama pada gambar dengan custom font styling
+- Perbandingan visual RGB vs Grayscale vs HSV
+
+**Soal 2 - Manipulasi Channel Warna RGB:**
+- Channel manipulation: +50 intensitas Red, -30 intensitas Blue
+- Clipping untuk memastikan nilai tetap dalam range 0-255
+- Histogram comparison per channel (R, G, B) sebelum dan sesudah modifikasi
+- Analisis pergeseran distribusi warna dan efek warm-toned
+
+**Soal 3 - Deteksi Tepi dan Filter Citra:**
+- Canny Edge Detection dengan threshold (50, 150)
+- Binary thresholding dengan nilai T=130 untuk segmentasi objek
+- Manual bounding box pada objek utama
+- Gaussian Blur (15x15 kernel) untuk smoothing
+- Sharpening filter menggunakan kernel konvolusi custom
+- Perbandingan efek blur vs sharpening pada detail gambar
+
+**Soal 4 - Deteksi Wajah dan Filter Digital Kreatif:**
+- Face detection menggunakan OpenCV Haar Cascade Classifier
+- Estimasi landmark wajah (forehead, nose, eyes) dari bounding box
+- Creative filter overlay: Vintage Hat + Handlebar Mustache
+- Drawing langsung menggunakan cv2.ellipse dan cv2.rectangle
+- Proportional scaling berdasarkan ukuran wajah terdeteksi
+- Perbandingan gambar asli vs hasil filter
+
+**Soal 5 - Perspektif dan Peningkatan Kualitas Citra:**
+- Perspective transformation menggunakan 4 titik manual
+- Koreksi distorsi geometris dengan homography matrix
+- Adaptive Thresholding (Gaussian, block_size=11, C=2)
+- Otsu Thresholding untuk perbandingan
+- Enhancement untuk document scanning dan OCR preprocessing
+
+**Teknik yang Diimplementasikan:**
+- Manual cropping dengan koordinat proporsional
+- Color space conversion (RGB, Grayscale, HSV)
+- Channel-level manipulation dengan numpy array operations
+- Edge detection algorithms (Canny)
+- Binary thresholding techniques (fixed & adaptive)
+- Spatial filtering (Gaussian blur, custom sharpening kernel)
+- Face detection dengan Haar Cascade
+- Geometric drawing untuk creative filters
+- Perspective transformation dengan getPerspectiveTransform
+- Adaptive vs Otsu thresholding comparison
+
+**Output Files Generated:**
+- `face_crop_920x920.png` - Hasil crop wajah dengan anotasi
+- `bg_crop_920x920.png` - Hasil crop background
+- `soal1_comparison.png` - Perbandingan RGB, Grayscale, HSV
+- `soal2_rgb_modified.png` - Gambar hasil modifikasi channel
+- `soal2_histogram_comparison.png` - Histogram comparison
+- `soal3_canny_edges.png` - Hasil edge detection
+- `soal3_threshold.png` - Hasil binary thresholding
+- `soal3_bbox.png` - Gambar dengan bounding box
+- `soal3_edge_filter_comparison.png` - Grid perbandingan filter
+- `soal4_filtered_face.png` - Gambar dengan creative filter
+- `soal4_face_filter_comparison.png` - Perbandingan sebelum/sesudah
+- `soal5_perspective.png` - Hasil koreksi perspektif
+- `soal5_adaptive_thresh.png` - Adaptive thresholding output
+- `soal5_otsu_thresh.png` - Otsu thresholding output
+- `soal5_perspective_correction.png` - Grid semua tahap pemrosesan
+
+**Learning Outcomes:**
+- Pemahaman struktur data citra digital (pixels, channels, color spaces)
+- Teknik cropping dan resizing untuk ROI extraction
+- Efek konversi ruang warna pada persepsi visual
+- Manipulasi channel-level untuk color grading
+- Algoritma edge detection dan segmentasi
+- Spatial filtering untuk blur dan sharpening
+- Face detection dan landmark estimation
+- Creative filter overlay dengan proportional scaling
+- Geometric transformation untuk perspective correction
+- Adaptive thresholding untuk varying illumination
+
+**Cara menjalankan:**
+```bash
+cd worksheet_4
+jupyter notebook 122140012_worksheet4.ipynb
+```
+
+---
+
 ## Quick Start
 
 ### Prerequisites
@@ -274,7 +388,7 @@ data/
 ```bash
 # Jalankan notebook audio processing
 cd ho_audio
-jupyter notebook 122140012.ipynb
+jupyter notebook 122140012_AudioExercise.ipynb
 
 # Follow workflow secara sequential:
 # Soal 1: Multi-level analysis → metadata, waveform, spectrogram, resampling
@@ -305,6 +419,20 @@ jupyter notebook 122140012_Worksheet2.ipynb
 # Perbandingan representasi multimedia dan learning outcomes
 ```
 
+### 4. Image Processing Worksheet (worksheet_4)
+```bash
+# Comprehensive digital image analysis dan manipulation
+cd worksheet_4
+jupyter notebook 122140012_worksheet4.ipynb
+
+# Sections processing:
+# Soal 1: Cropping manual (wajah + background) dan konversi warna (RGB, Grayscale, HSV)
+# Soal 2: Manipulasi channel RGB (+50 Red, -30 Blue) dengan histogram comparison
+# Soal 3: Edge detection (Canny), thresholding, bounding box, blur vs sharpening
+# Soal 4: Face detection dengan Haar Cascade dan creative filter overlay
+# Soal 5: Perspective correction dan adaptive/Otsu thresholding comparison
+```
+
 ---
 
 
@@ -326,6 +454,17 @@ jupyter notebook 122140012_Worksheet2.ipynb
 - Metadata extraction (dimensi, channels, dtype, memory usage)
 - Color histogram analysis untuk setiap channel RGB
 - Visual quality assessment berdasarkan distribusi intensitas
+- Manual cropping untuk ROI extraction (wajah dan background)
+- Color space conversion (RGB, Grayscale, HSV)
+- Channel-level manipulation dan color grading
+- Edge detection dengan Canny algorithm
+- Binary thresholding (fixed dan adaptive)
+- Spatial filtering (Gaussian blur, custom sharpening kernel)
+- Face detection menggunakan Haar Cascade Classifier
+- Creative filter overlay dengan geometric drawing (ellipse, rectangle)
+- Perspective transformation dan homography
+- Otsu thresholding untuk automatic threshold selection
+- Document scanning enhancement dan preprocessing
 
 ### Video Processing:
 - Frame extraction dengan temporal sampling
@@ -338,6 +477,12 @@ jupyter notebook 122140012_Worksheet2.ipynb
 - Filtered audio dengan berbagai jenis filter
 - Pitch-shifted audio untuk sound effects
 - Remixed music dengan tempo dan key matching
+- Cropped images (face dan background) dengan resize 920x920
+- RGB modified images dengan channel manipulation
+- Edge detection dan thresholding results
+- Face filtered images dengan creative overlay
+- Perspective corrected images untuk document scanning
+- Histogram comparisons dan visual analysis grids
 - Test visualization outputs untuk environment verification
 
 ---
