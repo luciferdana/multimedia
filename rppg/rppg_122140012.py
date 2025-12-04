@@ -1,10 +1,3 @@
-"""
-Real-time Remote Photoplethysmography (rPPG) - Optimized Version
-Sistem Teknologi Multimedia - Institut Teknologi Sumatera
-
-Deteksi detak jantung real-time menggunakan webcam tanpa kontak fisik.
-"""
-
 import cv2
 import numpy as np
 import mediapipe as mp
