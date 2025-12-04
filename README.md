@@ -44,6 +44,10 @@ Sistem Teknologi Multimedia/
 │       ├── soal3_edge_filter_comparison.png
 │       ├── soal4_face_filter_comparison.png
 │       └── soal5_perspective_correction.png
+├── rppg/                               # Real-time rPPG Heart Rate Detection
+│   ├── rppg_122140012.py              # Script utama deteksi detak jantung
+│   ├── README.md                       # Laporan implementasi rPPG
+│   └── credit.png                      # Credit AI usage
 ├── data/                               # Dataset & Audio Files
 │   ├── audio.wav                      # Audio untuk worksheet
 │   ├── Audio1.wav                     # Multi-level voice recording
@@ -307,6 +311,76 @@ jupyter notebook 122140012_worksheet4.ipynb
 
 ---
 
+## rppg/
+
+**Deskripsi:** Real-time Remote Photoplethysmography (rPPG) untuk deteksi detak jantung menggunakan webcam tanpa kontak fisik
+
+**Konten:**
+- `rppg_122140012.py` - Script utama real-time heart rate detection
+- `README.md` - Laporan singkat implementasi rPPG
+- `credit.png` - Credit penggunaan AI
+
+**Pustaka yang Digunakan:**
+- **OpenCV (cv2)** - Antarmuka webcam, manipulasi frame, dan visualisasi overlay
+- **MediaPipe** - Deteksi wajah dan 468 titik face landmarks untuk ROI extraction
+- **NumPy** - Operasi numerik, perhitungan rata-rata, dan manipulasi array
+- **SciPy** - Bandpass filter (Butterworth) dan FFT untuk analisis frekuensi
+- **Matplotlib** - Visualisasi grafik sinyal secara real-time
+
+**Metode Implementasi:**
+- **Video Capture:** Webcam 30 FPS dengan resolusi 640x480
+- **Face Detection:** MediaPipe Face Mesh untuk landmark wajah presisi
+- **ROI Extraction:** Area dahi sebagai Region of Interest (kulit tipis, pembuluh darah dekat permukaan)
+- **Signal Extraction:** Rata-rata intensitas Green Channel (~540nm wavelength)
+- **Signal Processing:** Sliding window buffer 300 sampel (10 detik × 30 FPS)
+- **Filtering:** Bandpass filter 0.67-4.0 Hz (setara 40-240 BPM)
+- **BPM Estimation:** FFT untuk mencari frekuensi dominan, konversi ke BPM
+
+**Fitur yang Diimplementasikan:**
+- Real-time heart rate detection tanpa kontak fisik
+- MediaPipe Face Mesh dengan 468 landmark points untuk ROI akurat
+- Green channel extraction untuk respons optimal terhadap perubahan aliran darah
+- Butterworth bandpass filtering untuk isolasi sinyal detak jantung
+- FFT-based frequency estimation untuk BPM calculation
+- BPM smoothing dengan moving average window
+- Real-time visualization: Raw Signal, Filtered Signal, Power Spectrum
+- Webcam overlay dengan BPM display dan buffer progress
+
+**Aspek Pembeda dengan Demo di Kelas:**
+- Visualisasi grafik sinyal real-time dalam window terpisah (3 subplot)
+- ROI pada area dahi tengah (lebih optimal daripada seluruh wajah)
+- Stabilitas tracking menggunakan MediaPipe Face Mesh
+- BPM smoothing untuk hasil yang lebih stabil
+
+**Konfigurasi Parameter:**
+```python
+FPS = 30                    # Frame rate webcam
+WINDOW_SIZE = 10            # Buffer size dalam detik
+BUFFER_SIZE = 300           # Total sampel (FPS × WINDOW_SIZE)
+MIN_HR_BPM = 40             # Minimum heart rate
+MAX_HR_BPM = 240            # Maximum heart rate
+PLOT_UPDATE_INTERVAL = 30   # Update grafik setiap N frame
+BPM_SMOOTHING_WINDOW = 5    # Window untuk smoothing BPM
+```
+
+**Cara menjalankan:**
+```bash
+cd rppg
+python rppg_122140012.py
+
+# Instructions:
+# 1. Posisikan wajah di depan kamera
+# 2. Tunggu buffer mencapai 100%
+# 3. Tekan 'q' untuk keluar
+```
+
+**Requirements Tambahan:**
+```bash
+pip install mediapipe
+```
+
+---
+
 ## Quick Start
 
 ### Prerequisites
@@ -353,6 +427,8 @@ jupyter notebook 122140012_worksheet4.ipynb
 - `opencv-python` - Computer vision
 - `PIL/Pillow` - Image processing
 - `jupyter` - Interactive notebooks
+- `mediapipe` - Face detection dan landmark (untuk rPPG)
+- `scipy` - Signal processing dan FFT (untuk rPPG)
 
 **Full list:** Lihat `env_setup/requirements.txt`
 
@@ -433,9 +509,29 @@ jupyter notebook 122140012_worksheet4.ipynb
 # Soal 5: Perspective correction dan adaptive/Otsu thresholding comparison
 ```
 
+### 5. Real-time rPPG Heart Rate Detection (rppg)
+```bash
+# Jalankan script rPPG untuk deteksi detak jantung real-time
+cd rppg
+python rppg_122140012.py
+
+# Workflow program:
+# 1. Webcam capture pada 30 FPS dengan resolusi 640x480
+# 2. Face detection menggunakan MediaPipe Face Mesh (468 landmarks)
+# 3. ROI extraction pada area dahi untuk signal extraction
+# 4. Green channel mean extraction dari ROI
+# 5. Buffer sliding window 300 sampel (10 detik × 30 FPS)
+# 6. Bandpass filtering (0.67-4.0 Hz = 40-240 BPM)
+# 7. FFT untuk estimasi frekuensi dominan → konversi ke BPM
+# 8. Real-time visualization (Raw Signal, Filtered, Spectrum)
+
+# Instructions:
+# - Posisikan wajah di depan kamera dengan pencahayaan baik
+# - Tunggu buffer mencapai 100% untuk hasil akurat
+# - Tekan 'q' untuk keluar dari program
+```
+
 ---
-
-
 
 ## Features & Capabilities
 
@@ -472,6 +568,18 @@ jupyter notebook 122140012_worksheet4.ipynb
 - BGR to RGB conversion untuk proper visualization
 - Video classification berdasarkan resolusi (HD, Full HD, 4K)
 
+### rPPG Heart Rate Detection:
+- Real-time heart rate detection tanpa kontak fisik menggunakan webcam
+- Face detection dengan MediaPipe Face Mesh (468 landmark points)
+- ROI extraction pada area dahi (kulit tipis, pembuluh darah dekat permukaan)
+- Green channel signal extraction (~540nm wavelength optimal untuk hemoglobin)
+- Sliding window buffer untuk continuous signal processing
+- Butterworth bandpass filtering (0.67-4.0 Hz = 40-240 BPM range)
+- FFT-based frequency analysis untuk estimasi BPM
+- BPM smoothing dengan moving average window
+- Real-time 3-panel visualization (Raw Signal, Filtered Signal, Power Spectrum)
+- Webcam overlay dengan BPM display dan buffer progress indicator
+
 ### Output Files Generated:
 - Resampled audio files dengan sample rate berbeda
 - Filtered audio dengan berbagai jenis filter
@@ -487,8 +595,6 @@ jupyter notebook 122140012_worksheet4.ipynb
 
 ---
 
-
-
 ## License & References
 
 **Academic Use Only** - Tugas Kuliah Sistem Teknologi Multimedia
@@ -498,5 +604,7 @@ jupyter notebook 122140012_worksheet4.ipynb
 - OpenCV Documentation: https://opencv.org/
 - Matplotlib Documentation: https://matplotlib.org/
 - NumPy Documentation: https://numpy.org/
+- MediaPipe Documentation: https://mediapipe.dev/
+- SciPy Documentation: https://scipy.org/
 
 ---
